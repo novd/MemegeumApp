@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Models\" />
+    <Folder Include="Views\" />
+    <Folder Include="Views\Home\" />
+    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\css\" />
+    <Folder Include="Views\Shared\" />
+    <Folder Include="wwwroot\lib\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\img\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="libman.json" />
+    <Content Remove="wwwroot\lib\bootstrap\css\bootstrap-grid.css.map" />
+    <Content Remove="wwwroot\img\pepe_icon.png" />
+    <Content Remove="wwwroot\img\logo_text.png" />
+    <Content Remove="wwwroot\img\pepe_angry.png" />
+    <Content Remove="wwwroot\img\pepe_ok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Views\Error.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\img\pepe_icon.png" />
+    <None Include="wwwroot\img\logo_text.png" />
+    <None Include="wwwroot\img\pepe_angry.png" />
+    <None Include="wwwroot\img\pepe_ok.png" />
+  </ItemGroup>
+</Project>

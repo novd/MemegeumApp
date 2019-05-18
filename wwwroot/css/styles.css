@@ -1,0 +1,236 @@
+﻿body {
+    background-color: rgb(31, 32, 33);
+}
+
+.center{
+    margin:auto;
+}
+
+.expand{
+    width:100%;
+}
+
+.collapsible {
+    margin: auto;
+    width: 50%;
+    display: block;
+    background-color: rgb(52, 58, 64);
+
+}
+
+btn.collapsible{
+    font-size:20px;
+}
+
+.collapsible-content {
+    margin-bottom:80px;
+    margin-top:20px;
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+
+.brand-center {
+    position: absolute;
+    left: 42%;
+    margin-left: -50px !important;
+    display: block;
+}
+
+div.meme-container {
+    margin: auto;
+    width: 50%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: rgb(52, 58, 64);
+}
+
+div.tag-container {
+    margin: auto;
+    width: 50%;
+    height: 150px;
+    margin-bottom: 20px;
+    background-color: rgb(52, 58, 64);
+    border-color: black;
+    border-left-style: solid;
+    border-left-width: 5px;
+    border-bottom-style: groove;
+    border-top-style: groove;
+    border-right-style: groove;
+    overflow-x: auto;
+
+    font-size:20px;
+}
+
+div.page-nr-container{
+    margin:auto;
+    width:53%;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+
+ul.tag-list {
+    list-style-type: none;
+    white-space: nowrap;
+    padding: 10px;
+}
+
+li.tag-element {
+    padding: 10px;
+    display: inline-block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    cursor: pointer;
+
+    
+}
+
+.tag-options-container {
+    visibility: hidden;
+    width: 0px;
+    opacity:0;
+
+    transition: opacity 0.3s;
+}
+
+.tag-element:hover  .tag-options-container {
+    visibility: visible;
+    width: 70%;
+    opacity:1;
+}
+
+.custom-btn {
+    color: white;
+    border: none;
+    border-radius:10px;
+    padding: 10px 30px;
+    font-size: 20px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+}
+
+a.custom-btn {
+    text-decoration: none;
+    font-size:14px;
+    width:9%;
+}
+
+a.custom-btn:hover{
+    color:white;
+}
+
+
+.btn-white-list {
+    background-color: green;
+    font-size:12px;
+}
+
+.btn-white-list:hover {
+    box-shadow: 5px 4px 10px black
+}
+
+.btn-black-list {
+    background-color: red;
+    font-size:12px;
+}
+
+.btn-black-list:hover {
+    box-shadow: 5px 4px 10px black;
+}
+
+.btn-page-selected{
+    background-color:darkgreen;
+}
+
+.btn-page-selected:hover {
+    box-shadow: 1px 2px 20px green;
+}
+
+.btn-page-unselected {
+    background-color: green;
+}
+
+.btn-page-unselected:hover {
+    box-shadow: 1px 2px 20px green;
+}
+
+.btn-form-submit{
+    background-color:green;
+}
+
+.btn-form-submit:hover {
+    box-shadow: 1px 2px 20px green;
+}
+.meme-grades-container {
+    width:40%;
+    text-align: left !important;
+    margin: 10px;
+    padding: 30px;
+}
+
+.single-grade-container {
+    display: inline;
+    height:0px;
+    visibility:hidden;
+    opacity:0;
+    transition:opacity 0.3s, height 0.3s;
+}
+
+.meme-grades-container:hover  .single-grade-container {
+    visibility: visible;
+    opacity: 1;
+}
+
+.meme-grades-container:hover  .single-grade-container > img {
+    width: 100px;
+    height: 100px;
+}
+
+.grade_img {
+    width: 0px;
+    height: 0px;
+    transition: width 0.3s, height 0.3s;
+}
+
+.grade_img:hover{
+    width:100px;
+    height:100px;
+}
+
+.grade-header {
+    color:lightgrey;
+    transition: color 0.3s;
+}
+
+.grade-header:hover{
+    color:white;
+}
+
+
+.meme-title {
+    text-align: center;
+    color: white;
+}
+
+.meme-source {
+    text-align: right;
+    color:white;
+}
+
+img.meme {
+    display: block;
+    margin: auto;
+}
+
+i.arrow-icon {
+    background-color: black;
+    display: inline-block;
+    margin-left: 10px;
+    height: 20px;
+}

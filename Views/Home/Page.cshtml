@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Meme>
+
+@{
+    var tags = ViewBag.Tags;
+    tags.Sort();
+
+    var pages = ((IEnumerable<int>)ViewBag.PageRange).ToList();
+
+    var whiteListTags = ViewBag.WhiteListTags ?? "";
+    var blackListTags = ViewBag.BlackListTags ?? "";
+}
+
+
+<button class="collapsible custom-btn">Tagi</button>
+<div class="collapsible-content">
+    <button class="collapsible custom-btn">Wszystkie tagi</button>
+    <div class="tag-container collapsible-content">
+        <input class="center expand" type="text" placeholder="Szukaj tagów..." onkeyup="searchInUl(this, 'allTags')" />
+        <ul id="allTags" class="tag-list">
+            @foreach (var tag in tags)
+            {
+                <li class="tag-element">
+                    <p>#@tag</p>
+                    <div id="tagOptions" class="tag-options-container">
+                        <button class="custom-btn btn-white-list" onclick="moveParentToWhiteList(this)">BIAŁA LISTA</button>
+                        <button class="custom-btn btn-black-list" onclick="moveParentToBlackList(this)">CZARNA LISTA</button>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <button class="collapsible custom-btn center">Biała lista</button>
+    <div class="tag-container collapsible-content">
+        <ul id="whiteListTags" class="tag-list"></ul>
+    </div>
+
+    <button class="collapsible custom-btn">Czarna lista</button>
+    <div class="tag-container collapsible-content">
+        <ul id="blackListTags" class="tag-list"></ul>
+    </div>
+    <form asp-controller="home" asp-action="sortbytags" method="post">
+        <input name="whiteListTagsText" type="hidden" id="whiteListTagsInput" value="@whiteListTags" />
+        <input name="blackListTagsText" type="hidden" id="blackListTagsInput" value="@blackListTags" />
+        <button type="submit" class="custom-btn btn-form-submit">Zaktualizuj</button>
+    </form>
+</div>
+<div>
+    @foreach (var meme in Model)
+    {
+        <div class="meme-container">
+            <h3 class="meme-title">@meme.Title</h3>
+            <h4 class="meme-source">From: @meme.Page</h4>
+            <div>
+                @foreach (var tag in meme.Tags)
+                {<p style="display:inline;">#@tag </p>}
+            </div>
+            <img src="@meme.ImagePath" class="meme" />
+            <div class="meme-grades-container">
+                <p class="grade-header">OCEŃ</p>
+                <div class="single-grade-container">
+                    <img class="grade_img" src="~/img/pepe_ok.png"/>
+                </div>
+                <div class="single-grade-container">
+                    <img class="grade_img" src="~/img/pepe_angry.png"/>
+                </div> 
+            </div>
+        </div>
+    }
+</div>
+<div class="page-nr-container">
+    @for (int i = 0; i < pages.Count; i++)
+    {
+        if (pages[i] == ViewBag.SelectedPage)
+        {
+            <a asp-controller="home" asp-action="page" asp-route-numberofpage="@pages[i]"
+               class="custom-btn btn-page-selected">@pages[i]</a>
+        }
+        else
+        {
+            <a asp-controller="home" asp-action="page" asp-route-numberofpage="@pages[i]"
+               class="custom-btn btn-page-unselected">@pages[i]</a>
+        }
+    }
+</div>
+
+

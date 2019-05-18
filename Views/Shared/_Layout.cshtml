@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+
+        <nav class="navbar fixed-top navbar-expand-sm bg-dark navbar-dark">
+            <a class="navbar-brand" href="#">
+                <img src="~/img/pepe_icon.png" width="80" height="60" alt="">
+            </a>
+            <a class="navbar-brand brand-center" href="#">
+                <img src="~/img/logo_text.png" width="300" height="60" alt="">
+            </a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon" />
+            </button>
+            <div class="collapse navbar-collapse mr-auto" id="collapsibleNavbar">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a asp-controller="home" asp-action="index" class="nav-link">Zarejestruj się</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="home" asp-action="index" class="nav-link">Zaloguj</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div style="text-align:center;margin-top:100px;">
+            @RenderBody()
+        </div>
+        <script src="~/js/custom.js"></script>
+        <script src="~/js/collapse.js"></script>
+        <script src="~/js/updateTagLists.js"></script>
+    </div>
+</body>
+
+</html>
