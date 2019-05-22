@@ -1,6 +1,6 @@
-/bin
-/obj
+bin
+obj
 wwwroot/lib
-/memegeum.db
-/Migrations
+memegeum.db
+Migrations
 README.md
