@@ -1,41 +1,42 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
+using memegeumApp.Models;
 using Microsoft.AspNetCore.Http;
 
-namespace memegeumApp.Models
+namespace memegeumApp.Data
 {
-    public class MemeRespository : IMemeRespository
+    public class DbMemeRespository : IMemeRespository
     {
-        readonly IHttpContextAccessor _httpContextAccessor;
-
-        List<Meme> _memes;
+        private readonly AppDbContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         readonly int _MEMES_PER_PAGE = 8;
         readonly int _DEFAULT_PAGE_NUMBERS_PER_PAGE = 10;
-        public MemeRespository(IHttpContextAccessor httpContextAccessor)
+
+        public DbMemeRespository(AppDbContext context, IHttpContextAccessor httpContextAccessor)
         {
-            _memes = new List<Meme>();
+            _context = context;
             _httpContextAccessor = httpContextAccessor;
         }
 
-
         public int AddMemes(IEnumerable<Meme> newMemes)
         {
-            var oldMemesAmount = _memes.Count();
+            var oldMemesCount = _context.Memes.Count();
 
-            _memes.AddRange(
-                newMemes.Where(newMeme => !InCollection(_memes, newMeme))
+            _context.Memes.AddRange(
+                newMemes.Where(newMeme => 
+                    !_context.Memes.Select(meme => meme.ImagePath).Contains(newMeme.ImagePath))
                 );
+            _context.SaveChanges();
 
-            return _memes.Count() - oldMemesAmount;
+            return _context.Memes.Count() - oldMemesCount;
         }
-
 
         public IEnumerable<Meme> GetAllMemesByNewest()
         {
-            var filteredMemes = _memes.ToList();
+            var filteredMemes = _context.Memes.ToList();
             filteredMemes.Reverse();
 
             filteredMemes = FilterMemesByBlackList(filteredMemes);
@@ -44,10 +45,25 @@ namespace memegeumApp.Models
             return filteredMemes;
         }
 
+        public IEnumerable<string> GetAllTags()
+        {
+            var tags = _context.Memes.SelectMany(meme => meme.Tags).Distinct().ToList();
+            tags.Sort();
+
+            return tags;
+        }
+
+        public int GetMaxPageNumber()
+        {
+            return GetAllMemesByNewest().Count() / _MEMES_PER_PAGE;
+        }
+
         public IEnumerable<Meme> GetMemesByPage(int numberOfPage)
         {
-            var index = _MEMES_PER_PAGE * (numberOfPage-1);
-            if ((index + _MEMES_PER_PAGE) < GetAllMemesByNewest().Count())
+            numberOfPage = (numberOfPage > 1 ? numberOfPage - 1 : 1) - 1;
+            var index = _MEMES_PER_PAGE * numberOfPage;
+
+            if ((index + _MEMES_PER_PAGE) <= GetAllMemesByNewest().Count())
             {
                 return GetAllMemesByNewest().ToList().GetRange(index, _MEMES_PER_PAGE);
             }
@@ -55,17 +71,17 @@ namespace memegeumApp.Models
             throw new ArgumentOutOfRangeException($"There is no {numberOfPage} page in respository");
         }
 
-        public int GetMaxPageNumber()
+        public IEnumerable<Meme> GetMemesByTags(IEnumerable<string> tags)
         {
-            return ((GetAllMemesByNewest().Count() / _MEMES_PER_PAGE));
+            return GetAllMemesByNewest().Where(meme => tags.Any(tag => meme.Tags.Contains(tag)));
         }
 
-        public IEnumerable<int> GetPageNumberRange(int currentNumber)
+        public IEnumerable<int> GetPageNumberRange(int currentPage)
         {
             var maxNumber = GetMaxPageNumber();
 
-            var firstInRange = GetFirstInRange(currentNumber);
-            var lastInRange = GetLastInRange(currentNumber, maxNumber);
+            var firstInRange = GetFirstInRange(currentPage);
+            var lastInRange = GetLastInRange(currentPage, maxNumber);
             var range = Enumerable.Range(
                             firstInRange,
                             (lastInRange - firstInRange + 1));
@@ -75,16 +91,8 @@ namespace memegeumApp.Models
             return range.Reverse();
         }
 
-        public IEnumerable<Meme> GetMemesByTags(IEnumerable<string> tags)
-        {
-            return _memes.Where(meme => tags.Any(tag => meme.Tags.Contains(tag)));
-        }
 
-        #region Additional private Methods
-        bool InCollection(IEnumerable<Meme> collection, Meme meme)
-        {
-            return collection.Select(item => item.ImagePath).Contains(meme.ImagePath);
-        }
+        #region Help Methods
 
         #region GetPageNumberRange help methods
         int GetFirstInRange(int currentNumber)
@@ -116,7 +124,6 @@ namespace memegeumApp.Models
 
             return completeRange.Take(_DEFAULT_PAGE_NUMBERS_PER_PAGE).ToList();
         }
-
         #endregion
 
         #region GetAllMemesByNewest help methods

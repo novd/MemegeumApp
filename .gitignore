@@ -1,2 +1,6 @@
-wwwroot/bin
+/bin
+/obj
 wwwroot/lib
+/memegeum.db
+/Migrations
+README.md

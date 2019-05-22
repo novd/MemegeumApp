@@ -26,7 +26,7 @@ namespace memegeumApp.Parsers.KwejkParser
             return document.DocumentNode.Descendants("a")
                                         .Where(node => node.GetAttributeValue("dusk", "").Contains("media-title-selector"))
                                         .Select(node => node.InnerText)
-                                        .First();
+                                        .First().Trim();
         }
 
         internal static string GetMemeImgPath(string memePart)

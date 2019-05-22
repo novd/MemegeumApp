@@ -1,7 +1,8 @@
 ﻿using System;
+using memegeumApp.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace memegeumApp.Models
+namespace memegeumApp.Data
 {
     public class AppDbContext : DbContext
     {
@@ -10,5 +11,7 @@ namespace memegeumApp.Models
         {
             //todo db logic with sqlite
         }
+
+        public DbSet<Meme> Memes { get; set; }
     }
 }

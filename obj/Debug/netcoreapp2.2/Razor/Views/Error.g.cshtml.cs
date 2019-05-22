@@ -18,8 +18,13 @@ using memegeumApp.Models;
 
 #line default
 #line hidden
+#line 3 "/Users/danielnowak/Desktop/Programowanie/C_sharp/ASP NET Core/memegeumApp/memegeumApp/Views/_ViewImports.cshtml"
+using memegeumApp.ViewModels;
+
+#line default
+#line hidden
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"45c94f21cb04bb6c4031fbbc01742e83be96a255", @"/Views/Error.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"27210755fc76bebe502146dcb43fe5856089cff4", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"19c23c659d2a224eb755e436def656ff6d9648b3", @"/Views/_ViewImports.cshtml")]
     public class Views_Error : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<string[]>
     {
         #pragma warning disable 1998

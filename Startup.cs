@@ -2,22 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using memegeumApp.Data;
 using memegeumApp.Models;
 using memegeumApp.Parsers;
 using memegeumApp.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 /*
-    TODO:
-    -add database
-       -> configure db
-       -> migrate memeRespository to db
-       
-    -decorate and boost css  
+
 */
 
 namespace memegeumApp
@@ -30,9 +27,15 @@ namespace memegeumApp
         {
             services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(30));
 
+            services.AddDbContextPool<AppDbContext>(
+                options => options.UseSqlite("Data Source=memegeum.db")
+                );
             services.AddMvc();
-            services.AddSingleton<IMemeRespository, MemeRespository>();
+
+            services.AddTransient<IMemeRespository, DbMemeRespository>();
+
             services.AddSingleton<IMemeParser, GeneralMemeParser>();
+
             services.AddHttpContextAccessor();
             services.AddLogging();
             services.AddHostedService<MemeParseService>();

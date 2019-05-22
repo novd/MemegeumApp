@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using memegeumApp.Models;
+using memegeumApp.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -37,6 +38,7 @@ namespace memegeumApp.Controllers
 
             try
             {
+                /*
                 var tags = _memeRespository.GetAllMemesByNewest().SelectMany(meme => meme.Tags).Distinct().ToList();
                 ViewBag.Tags = tags;
 
@@ -47,7 +49,18 @@ namespace memegeumApp.Controllers
                 ViewBag.WhiteListTags = HttpContext.Session.GetString("_whiteListTags");
                 ViewBag.BlackListTags = HttpContext.Session.GetString("_blackListTags");
 
-                return View(memesByPage);
+                return View(memesByPage); */
+
+                var memesViewModel = new MemesViewModel {
+                    Memes = _memeRespository.GetMemesByPage(numberOfPage),
+                    AllTags = _memeRespository.GetAllTags(),
+                    WhiteListTagsAsString = HttpContext.Session.GetString("_whiteListTags"),
+                    BlackListTagsAsString = HttpContext.Session.GetString("_blackListTags"),
+                    PageNumbers = _memeRespository.GetPageNumberRange(numberOfPage),
+                    SelectedPage = numberOfPage
+                };
+
+                return View(memesViewModel);
             }
             catch (ArgumentOutOfRangeException e)
             {
